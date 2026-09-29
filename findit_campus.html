@@ -1,0 +1,3703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FindIt Campus</title>
+
+<style>
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#172033;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+
+/* =========================
+   LAYOUT
+========================= */
+
+.app{
+    min-height:100vh;
+    display:flex;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:245px;
+    min-height:100vh;
+    background:#111827;
+    color:white;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    z-index:100;
+    padding:25px 16px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 12px 30px;
+}
+
+.brand-icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    background:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.brand h2{
+    font-size:20px;
+}
+
+.brand span{
+    color:#60a5fa;
+}
+
+.menu-title{
+    color:#6b7280;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+    padding:0 12px;
+    margin:18px 0 10px;
+}
+
+.menu-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#9ca3af;
+    padding:12px;
+    border-radius:9px;
+    text-align:left;
+    margin-bottom:5px;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    transition:.2s;
+}
+
+.menu-btn:hover{
+    background:#1f2937;
+    color:white;
+}
+
+.menu-btn.active{
+    background:#2563eb;
+    color:white;
+}
+
+.menu-icon{
+    width:20px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    left:16px;
+    right:16px;
+    bottom:20px;
+}
+
+.logout-btn{
+    width:100%;
+    border:0;
+    background:#1f2937;
+    color:#d1d5db;
+    padding:12px;
+    border-radius:9px;
+}
+
+.logout-btn:hover{
+    background:#374151;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+    width:calc(100% - 245px);
+    min-height:100vh;
+}
+
+.topbar{
+    height:75px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+}
+
+.page-title h1{
+    font-size:21px;
+}
+
+.page-title p{
+    color:#8a94a6;
+    font-size:13px;
+    margin-top:3px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.profile-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.profile-name{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.profile-id{
+    color:#8a94a6;
+    font-size:11px;
+    margin-top:2px;
+}
+
+.content{
+    padding:30px 35px;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+#authPage{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top right,#dbeafe,transparent 35%),
+        #f5f7fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.auth-container{
+    width:100%;
+    max-width:430px;
+}
+
+.auth-brand{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.auth-brand .brand-icon{
+    margin:auto;
+    color:white;
+}
+
+.auth-brand h1{
+    margin-top:12px;
+    font-size:28px;
+}
+
+.auth-brand p{
+    color:#7b8494;
+    margin-top:6px;
+    font-size:14px;
+}
+
+.auth-card{
+    background:white;
+    border:1px solid #e8ebf0;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 15px 40px rgba(15,23,42,.08);
+}
+
+.auth-card h2{
+    font-size:21px;
+    margin-bottom:6px;
+}
+
+.auth-card .sub{
+    color:#8a94a6;
+    font-size:13px;
+    margin-bottom:24px;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:#4b5563;
+    margin-bottom:7px;
+}
+
+.input,
+textarea,
+select{
+    width:100%;
+    border:1px solid #dce1e8;
+    border-radius:9px;
+    padding:12px 13px;
+    outline:none;
+    background:#fff;
+    color:#172033;
+    transition:.2s;
+}
+
+.input:focus,
+textarea:focus,
+select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.08);
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.auth-switch{
+    text-align:center;
+    margin-top:18px;
+    color:#7b8494;
+    font-size:13px;
+}
+
+.auth-switch span{
+    color:#2563eb;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    border:0;
+    border-radius:8px;
+    padding:10px 15px;
+    font-size:13px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-success{
+    background:#16a34a;
+    color:white;
+}
+
+.btn-warning{
+    background:#f59e0b;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-light{
+    background:#eef2f7;
+    color:#374151;
+}
+
+.full{
+    width:100%;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.dashboard-head h2{
+    font-size:24px;
+}
+
+.dashboard-head p{
+    color:#8a94a6;
+    font-size:13px;
+    margin-top:5px;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:28px;
+}
+
+.stat-card{
+    background:white;
+    border:1px solid #e9edf2;
+    border-radius:13px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 3px 12px rgba(15,23,42,.03);
+}
+
+.stat-icon{
+    width:45px;
+    height:45px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.stat-blue{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.stat-orange{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.stat-green{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.stat-purple{
+    background:#ede9fe;
+    color:#7c3aed;
+}
+
+.stat-card h3{
+    font-size:23px;
+}
+
+.stat-card p{
+    color:#8a94a6;
+    font-size:12px;
+    margin-top:2px;
+}
+
+
+/* =========================
+   REPORT CARD
+========================= */
+
+.panel{
+    background:white;
+    border:1px solid #e8ebf0;
+    border-radius:14px;
+    padding:24px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(15,23,42,.03);
+}
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.panel-header h3{
+    font-size:17px;
+}
+
+.panel-header p{
+    color:#8a94a6;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:17px;
+}
+
+.full-field{
+    grid-column:1/-1;
+}
+
+
+/* =========================
+   TYPE SELECT
+========================= */
+
+.type-selection{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.type-option{
+    border:1px solid #dfe4eb;
+    border-radius:9px;
+    padding:13px;
+    text-align:center;
+    cursor:pointer;
+    color:#667085;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.type-option.active{
+    border-color:#2563eb;
+    background:#eff6ff;
+    color:#2563eb;
+}
+
+
+/* =========================
+   ITEMS SECTION
+========================= */
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:30px 0 17px;
+}
+
+.section-header h2{
+    font-size:18px;
+}
+
+.section-header p{
+    color:#8a94a6;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.tabs{
+    display:flex;
+    gap:5px;
+    background:#e9edf3;
+    padding:4px;
+    border-radius:9px;
+}
+
+.tab{
+    border:0;
+    background:transparent;
+    padding:9px 14px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:700;
+    color:#697386;
+}
+
+.tab.active{
+    background:white;
+    color:#2563eb;
+    box-shadow:0 2px 5px rgba(0,0,0,.05);
+}
+
+
+/* =========================
+   ITEM GRID
+========================= */
+
+.items-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.item-card{
+    background:white;
+    border:1px solid #e8ebf0;
+    border-radius:13px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(15,23,42,.03);
+    transition:.2s;
+}
+
+.item-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 22px rgba(15,23,42,.08);
+}
+
+.item-image{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    display:block;
+    background:#eef2f7;
+}
+
+.no-image{
+    width:100%;
+    height:180px;
+    background:#f0f3f7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#9aa3b2;
+    font-size:13px;
+}
+
+.item-body{
+    padding:17px;
+}
+
+.item-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.item-name{
+    font-size:16px;
+    font-weight:700;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.status-lost{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.status-found{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status-received{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.item-description{
+    color:#697386;
+    font-size:12px;
+    line-height:1.5;
+    margin:10px 0 13px;
+}
+
+.item-info{
+    border-top:1px solid #edf0f4;
+    padding-top:11px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:11px;
+    margin-bottom:7px;
+}
+
+.info-row span:first-child{
+    color:#9aa3b2;
+}
+
+.info-row span:last-child{
+    color:#374151;
+    text-align:right;
+}
+
+.item-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:14px;
+}
+
+.item-actions .btn{
+    font-size:11px;
+    padding:8px 10px;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    background:white;
+    border:1px dashed #d9dee7;
+    border-radius:13px;
+    padding:50px 20px;
+}
+
+.empty-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.empty h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.empty p{
+    color:#8a94a6;
+    font-size:12px;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    z-index:500;
+    padding:25px;
+    overflow:auto;
+}
+
+.modal.show{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    width:100%;
+    max-width:680px;
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:15px;
+    padding:24px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:18px;
+}
+
+.close-btn{
+    border:0;
+    background:#f1f3f6;
+    width:32px;
+    height:32px;
+    border-radius:7px;
+    font-size:20px;
+}
+
+.match-card{
+    border:1px solid #e4e8ee;
+    border-radius:11px;
+    padding:15px;
+    margin-bottom:11px;
+}
+
+.match-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.match-title h3{
+    font-size:14px;
+}
+
+.score{
+    background:#eef2ff;
+    color:#4338ca;
+    border-radius:20px;
+    padding:5px 8px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.match-card p{
+    color:#697386;
+    font-size:12px;
+    margin-top:8px;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#111827;
+    color:white;
+    padding:13px 18px;
+    border-radius:9px;
+    font-size:12px;
+    z-index:1000;
+    opacity:0;
+    transform:translateY(15px);
+    pointer-events:none;
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.toast.success{
+    background:#15803d;
+}
+
+.toast.error{
+    background:#dc2626;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .items-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        width:70px;
+        padding:20px 10px;
+    }
+
+    .brand{
+        justify-content:center;
+        padding:0 0 25px;
+    }
+
+    .brand h2,
+    .menu-title,
+    .menu-btn span:not(.menu-icon),
+    .logout-btn span{
+        display:none;
+    }
+
+    .menu-btn{
+        justify-content:center;
+    }
+
+    .sidebar-bottom{
+        left:10px;
+        right:10px;
+    }
+
+    .main{
+        margin-left:70px;
+        width:calc(100% - 70px);
+    }
+
+    .topbar{
+        padding:0 18px;
+    }
+
+    .profile-name,
+    .profile-id{
+        display:none;
+    }
+
+    .content{
+        padding:22px 18px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full-field{
+        grid-column:auto;
+    }
+}
+
+@media(max-width:580px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:14px;
+    }
+
+    .stat-icon{
+        width:38px;
+        height:38px;
+    }
+
+    .items-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-head{
+        display:block;
+    }
+
+    .section-header{
+        display:block;
+    }
+
+    .tabs{
+        margin-top:12px;
+        width:max-content;
+    }
+
+    .topbar{
+        height:65px;
+    }
+
+    .auth-card{
+        padding:22px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     AUTH PAGE
+===================================================== -->
+
+<div id="authPage">
+
+    <div class="auth-container">
+
+        <div class="auth-brand">
+
+            <div class="brand-icon">F</div>
+
+            <h1>FindIt Campus</h1>
+
+            <p>
+                College Lost & Found Management System
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div class="auth-card" id="loginCard">
+
+            <h2>Welcome Back</h2>
+
+            <p class="sub">
+                Login to manage your lost and found items.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    class="input"
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    class="input"
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password">
+
+            </div>
+
+
+            <button
+                class="btn btn-primary full"
+                onclick="login()">
+
+                Login
+
+            </button>
+
+
+            <div class="auth-switch">
+
+                Don't have an account?
+
+                <span onclick="showRegister()">
+                    Create Account
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <div class="auth-card" id="registerCard" style="display:none;">
+
+            <h2>Create Account</h2>
+
+            <p class="sub">
+                Register with your college details.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>Student Name</label>
+
+                <input
+                    class="input"
+                    id="regName"
+                    placeholder="Enter your name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    class="input"
+                    type="email"
+                    id="regEmail"
+                    placeholder="Enter email">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Student ID</label>
+
+                <input
+                    class="input"
+                    id="regStudentId"
+                    placeholder="Enter student ID">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Phone Number</label>
+
+                <input
+                    class="input"
+                    id="regPhone"
+                    placeholder="Enter phone number">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    class="input"
+                    type="password"
+                    id="regPassword"
+                    placeholder="Create password">
+
+            </div>
+
+
+            <button
+                class="btn btn-primary full"
+                onclick="register()">
+
+                Create Account
+
+            </button>
+
+
+            <div class="auth-switch">
+
+                Already have an account?
+
+                <span onclick="showLogin()">
+                    Login
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div id="application" style="display:none;">
+
+<div class="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                F
+            </div>
+
+            <h2>
+                FindIt <span>Campus</span>
+            </h2>
+
+        </div>
+
+
+        <div class="menu-title">
+            MAIN MENU
+        </div>
+
+
+        <button
+            class="menu-btn active"
+            id="dashboardMenu"
+            onclick="openSection('dashboard')">
+
+            <span class="menu-icon">⌂</span>
+            <span>Dashboard</span>
+
+        </button>
+
+
+        <button
+            class="menu-btn"
+            id="lostMenu"
+            onclick="openSection('lost')">
+
+            <span class="menu-icon">◈</span>
+            <span>Lost Items</span>
+
+        </button>
+
+
+        <button
+            class="menu-btn"
+            id="foundMenu"
+            onclick="openSection('found')">
+
+            <span class="menu-icon">✓</span>
+            <span>Found Items</span>
+
+        </button>
+
+
+        <button
+            class="menu-btn"
+            id="receivedMenu"
+            onclick="openSection('received')">
+
+            <span class="menu-icon">★</span>
+            <span>Received</span>
+
+        </button>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                class="logout-btn"
+                onclick="logout()">
+
+                <span>↪ &nbsp; Logout</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <h1 id="topTitle">
+                    Dashboard
+                </h1>
+
+                <p>
+                    Manage your campus lost & found items
+                </p>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div>
+
+                    <div
+                        class="profile-name"
+                        id="profileName">
+                        Student
+                    </div>
+
+                    <div
+                        class="profile-id"
+                        id="profileId">
+                        Student ID
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar">
+                    S
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <div class="content">
+
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <section id="dashboardSection">
+
+                <div class="dashboard-head">
+
+                    <div>
+
+                        <h2>
+                            Campus Overview
+                        </h2>
+
+                        <p>
+                            Keep track of lost, found and received items.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="stats">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon stat-blue">
+                            ◈
+                        </div>
+
+                        <div>
+
+                            <h3 id="lostCount">
+                                0
+                            </h3>
+
+                            <p>
+                                Lost Items
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon stat-orange">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <h3 id="foundCount">
+                                0
+                            </h3>
+
+                            <p>
+                                Found Items
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon stat-green">
+                            ★
+                        </div>
+
+                        <div>
+
+                            <h3 id="receivedCount">
+                                0
+                            </h3>
+
+                            <p>
+                                Received Items
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon stat-purple">
+                            +
+                        </div>
+
+                        <div>
+
+                            <h3 id="myCount">
+                                0
+                            </h3>
+
+                            <p>
+                                My Reports
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REPORT ITEM -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Report an Item
+                            </h3>
+
+                            <p>
+                                Add details about a lost or found item.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Item Type
+                            </label>
+
+
+                            <div class="type-selection">
+
+                                <div
+                                    class="type-option active"
+                                    id="lostType"
+                                    onclick="selectType('lost')">
+
+                                    ◈ &nbsp; Lost Item
+
+                                </div>
+
+
+                                <div
+                                    class="type-option"
+                                    id="foundType"
+                                    onclick="selectType('found')">
+
+                                    ✓ &nbsp; Found Item
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Item Name
+                            </label>
+
+                            <input
+                                class="input"
+                                id="itemName"
+                                placeholder="Example: Black Wallet">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Location
+                            </label>
+
+                            <input
+                                class="input"
+                                id="itemLocation"
+                                placeholder="Example: College Library">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Date & Time
+                            </label>
+
+                            <input
+                                class="input"
+                                type="datetime-local"
+                                id="itemDateTime">
+
+                        </div>
+
+
+                        <div class="form-group full-field">
+
+                            <label>
+                                Description
+                            </label>
+
+                            <textarea
+                                id="itemDescription"
+                                placeholder="Describe the item clearly..."></textarea>
+
+                        </div>
+
+
+                        <div class="form-group full-field">
+
+                            <label>
+                                Item Picture
+                            </label>
+
+                            <input
+                                class="input"
+                                type="file"
+                                id="itemImage"
+                                accept="image/*">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="addItem()">
+
+                        + Report Item
+
+                    </button>
+
+                </div>
+
+
+                <!-- RECENT ITEMS -->
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Recent Items
+                        </h2>
+
+                        <p>
+                            Latest campus reports
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="items-grid"
+                    id="dashboardItems">
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= ITEMS SECTION ================= -->
+
+            <section
+                id="itemsSection"
+                style="display:none;">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2 id="itemsTitle">
+                            Lost Items
+                        </h2>
+
+                        <p id="itemsSubtitle">
+                            Items reported as lost
+                        </p>
+
+                    </div>
+
+
+                    <div class="tabs">
+
+                        <button
+                            class="tab active"
+                            id="lostTab"
+                            onclick="changeTab('lost')">
+
+                            Lost
+
+                        </button>
+
+
+                        <button
+                            class="tab"
+                            id="foundTab"
+                            onclick="changeTab('found')">
+
+                            Found
+
+                        </button>
+
+
+                        <button
+                            class="tab"
+                            id="receivedTab"
+                            onclick="changeTab('received')">
+
+                            Received
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="items-grid"
+                    id="itemsGrid">
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MATCH MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="matchModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Possible Matches
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div id="matchesContainer"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const ITEMS_KEY = "findit_campus_items";
+const USERS_KEY = "findit_campus_users";
+const USER_KEY = "findit_campus_current_user";
+
+
+let items =
+    JSON.parse(
+        localStorage.getItem(ITEMS_KEY) || "[]"
+    );
+
+
+let users =
+    JSON.parse(
+        localStorage.getItem(USERS_KEY) || "[]"
+    );
+
+
+let currentUser =
+    JSON.parse(
+        localStorage.getItem(USER_KEY) || "null"
+    );
+
+
+let selectedType = "lost";
+let currentTab = "lost";
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        setDateTime();
+
+        if(currentUser){
+
+            showApplication();
+
+        }else{
+
+            showLogin();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+function showLogin(){
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "application"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginCard"
+    ).style.display = "block";
+
+    document.getElementById(
+        "registerCard"
+    ).style.display = "none";
+
+}
+
+
+function showRegister(){
+
+    document.getElementById(
+        "loginCard"
+    ).style.display = "none";
+
+    document.getElementById(
+        "registerCard"
+    ).style.display = "block";
+
+}
+
+
+function register(){
+
+    const name =
+        document.getElementById("regName")
+        .value.trim();
+
+    const email =
+        document.getElementById("regEmail")
+        .value.trim()
+        .toLowerCase();
+
+    const studentId =
+        document.getElementById("regStudentId")
+        .value.trim();
+
+    const phone =
+        document.getElementById("regPhone")
+        .value.trim();
+
+    const password =
+        document.getElementById("regPassword")
+        .value;
+
+
+    if(
+        !name ||
+        !email ||
+        !studentId ||
+        !password
+    ){
+
+        toast(
+            "Please fill all required fields.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        users.some(
+            user =>
+                user.email === email
+        )
+    ){
+
+        toast(
+            "Email already registered.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const user = {
+
+        id:
+            Date.now().toString(),
+
+        name,
+
+        email,
+
+        studentId,
+
+        phone,
+
+        password
+
+    };
+
+
+    users.push(user);
+
+
+    localStorage.setItem(
+        USERS_KEY,
+        JSON.stringify(users)
+    );
+
+
+    toast(
+        "Account created successfully.",
+        "success"
+    );
+
+
+    document.getElementById(
+        "regName"
+    ).value = "";
+
+    document.getElementById(
+        "regEmail"
+    ).value = "";
+
+    document.getElementById(
+        "regStudentId"
+    ).value = "";
+
+    document.getElementById(
+        "regPhone"
+    ).value = "";
+
+    document.getElementById(
+        "regPassword"
+    ).value = "";
+
+
+    showLogin();
+
+}
+
+
+function login(){
+
+    const email =
+        document.getElementById("loginEmail")
+        .value.trim()
+        .toLowerCase();
+
+    const password =
+        document.getElementById("loginPassword")
+        .value;
+
+
+    const user =
+        users.find(
+            u =>
+                u.email === email &&
+                u.password === password
+        );
+
+
+    if(!user){
+
+        toast(
+            "Invalid email or password.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    currentUser = user;
+
+
+    localStorage.setItem(
+        USER_KEY,
+        JSON.stringify(currentUser)
+    );
+
+
+    showApplication();
+
+
+    toast(
+        "Welcome back!",
+        "success"
+    );
+
+}
+
+
+function logout(){
+
+    currentUser = null;
+
+    localStorage.removeItem(USER_KEY);
+
+    showLogin();
+
+}
+
+
+/* =====================================================
+   APPLICATION
+===================================================== */
+
+function showApplication(){
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "none";
+
+    document.getElementById(
+        "application"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "profileName"
+    ).innerText =
+        currentUser.name;
+
+
+    document.getElementById(
+        "profileId"
+    ).innerText =
+        currentUser.studentId;
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).innerText =
+        currentUser.name
+        .charAt(0)
+        .toUpperCase();
+
+
+    updateStats();
+
+    renderDashboard();
+
+}
+
+
+/* =====================================================
+   TYPE
+===================================================== */
+
+function selectType(type){
+
+    selectedType = type;
+
+
+    document
+        .getElementById("lostType")
+        .classList
+        .remove("active");
+
+
+    document
+        .getElementById("foundType")
+        .classList
+        .remove("active");
+
+
+    document
+        .getElementById(
+            type === "lost"
+                ? "lostType"
+                : "foundType"
+        )
+        .classList
+        .add("active");
+
+}
+
+
+/* =====================================================
+   ADD ITEM
+===================================================== */
+
+function addItem(){
+
+    const name =
+        document.getElementById(
+            "itemName"
+        ).value.trim();
+
+
+    const description =
+        document.getElementById(
+            "itemDescription"
+        ).value.trim();
+
+
+    const location =
+        document.getElementById(
+            "itemLocation"
+        ).value.trim();
+
+
+    const dateTime =
+        document.getElementById(
+            "itemDateTime"
+        ).value;
+
+
+    const imageInput =
+        document.getElementById(
+            "itemImage"
+        );
+
+
+    if(!name || !description){
+
+        toast(
+            "Item name and description are required.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(imageInput.files.length){
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event){
+
+                createItem(
+                    name,
+                    description,
+                    location,
+                    dateTime,
+                    event.target.result
+                );
+
+            };
+
+
+        reader.readAsDataURL(
+            imageInput.files[0]
+        );
+
+    }else{
+
+        createItem(
+            name,
+            description,
+            location,
+            dateTime,
+            ""
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CREATE ITEM
+===================================================== */
+
+function createItem(
+    name,
+    description,
+    location,
+    dateTime,
+    image
+){
+
+    const item = {
+
+        id:
+            Date.now().toString() +
+            Math.random()
+            .toString(36)
+            .substring(2),
+
+        type:selectedType,
+
+        /*
+            LOST  -> LOST
+            FOUND -> AVAILABLE
+        */
+
+        status:
+            selectedType === "lost"
+                ? "lost"
+                : "available",
+
+        itemName:name,
+
+        description:description,
+
+        location:location,
+
+        dateTime:
+            dateTime ||
+            new Date().toISOString(),
+
+        image:image,
+
+        postedBy:{
+            id:currentUser.id,
+            name:currentUser.name,
+            studentId:currentUser.studentId,
+            phone:currentUser.phone
+        },
+
+        received:null,
+
+        linkedLostItemId:null
+
+    };
+
+
+    items.unshift(item);
+
+
+    saveItems();
+
+    clearForm();
+
+    updateStats();
+
+    renderDashboard();
+
+    renderItems();
+
+
+    toast(
+        selectedType === "lost"
+            ? "Lost item reported successfully."
+            : "Found item reported successfully.",
+        "success"
+    );
+
+}
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function saveItems(){
+
+    localStorage.setItem(
+        ITEMS_KEY,
+        JSON.stringify(items)
+    );
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function updateStats(){
+
+    const lost =
+        items.filter(
+            item =>
+                item.type === "lost" &&
+                item.status === "lost"
+        ).length;
+
+
+    const found =
+        items.filter(
+            item =>
+                item.type === "found" &&
+                item.status === "available"
+        ).length;
+
+
+    const received =
+        items.filter(
+            item =>
+                item.status === "received"
+        ).length;
+
+
+    const mine =
+        items.filter(
+            item =>
+                item.postedBy.id ===
+                currentUser.id
+        ).length;
+
+
+    document.getElementById(
+        "lostCount"
+    ).innerText = lost;
+
+
+    document.getElementById(
+        "foundCount"
+    ).innerText = found;
+
+
+    document.getElementById(
+        "receivedCount"
+    ).innerText = received;
+
+
+    document.getElementById(
+        "myCount"
+    ).innerText = mine;
+
+}
+
+
+/* =====================================================
+   DASHBOARD ITEMS
+===================================================== */
+
+function renderDashboard(){
+
+    const container =
+        document.getElementById(
+            "dashboardItems"
+        );
+
+
+    const recent =
+        items
+        .filter(
+            item =>
+                item.status !== "received"
+        )
+        .slice(0,6);
+
+
+    if(!recent.length){
+
+        container.innerHTML = emptyHTML(
+            "No Items Yet",
+            "Reported items will appear here."
+        );
+
+        return;
+    }
+
+
+    container.innerHTML =
+        recent
+        .map(
+            item =>
+                itemCard(item)
+        )
+        .join("");
+
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+function openSection(section){
+
+    document
+        .querySelectorAll(".menu-btn")
+        .forEach(
+            btn =>
+                btn.classList.remove("active")
+        );
+
+
+    document.getElementById(
+        "dashboardSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "itemsSection"
+    ).style.display = "none";
+
+
+    if(section === "dashboard"){
+
+        document.getElementById(
+            "dashboardMenu"
+        ).classList.add("active");
+
+
+        document.getElementById(
+            "dashboardSection"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "topTitle"
+        ).innerText = "Dashboard";
+
+
+        renderDashboard();
+
+    }
+
+
+    if(section === "lost"){
+
+        document.getElementById(
+            "lostMenu"
+        ).classList.add("active");
+
+
+        document.getElementById(
+            "itemsSection"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "topTitle"
+        ).innerText = "Lost Items";
+
+
+        changeTab("lost");
+
+    }
+
+
+    if(section === "found"){
+
+        document.getElementById(
+            "foundMenu"
+        ).classList.add("active");
+
+
+        document.getElementById(
+            "itemsSection"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "topTitle"
+        ).innerText = "Found Items";
+
+
+        changeTab("found");
+
+    }
+
+
+    if(section === "received"){
+
+        document.getElementById(
+            "receivedMenu"
+        ).classList.add("active");
+
+
+        document.getElementById(
+            "itemsSection"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "topTitle"
+        ).innerText = "Received Items";
+
+
+        changeTab("received");
+
+    }
+
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+function changeTab(tab){
+
+    currentTab = tab;
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            btn =>
+                btn.classList.remove("active")
+        );
+
+
+    document.getElementById(
+        tab + "Tab"
+    ).classList.add("active");
+
+
+    const title =
+        document.getElementById(
+            "itemsTitle"
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            "itemsSubtitle"
+        );
+
+
+    if(tab === "lost"){
+
+        title.innerText = "Lost Items";
+
+        subtitle.innerText =
+            "Items currently reported as lost.";
+
+    }
+
+
+    if(tab === "found"){
+
+        title.innerText = "Found Items";
+
+        subtitle.innerText =
+            "Items currently available to claim.";
+
+    }
+
+
+    if(tab === "received"){
+
+        title.innerText = "Received Items";
+
+        subtitle.innerText =
+            "Permanent received item history.";
+
+    }
+
+
+    renderItems();
+
+}
+
+
+/* =====================================================
+   RENDER ITEMS
+===================================================== */
+
+function renderItems(){
+
+    const container =
+        document.getElementById(
+            "itemsGrid"
+        );
+
+
+    let filtered = [];
+
+
+    if(currentTab === "lost"){
+
+        filtered =
+            items.filter(
+                item =>
+                    item.type === "lost" &&
+                    item.status === "lost"
+            );
+
+    }
+
+
+    if(currentTab === "found"){
+
+        filtered =
+            items.filter(
+                item =>
+                    item.type === "found" &&
+                    item.status === "available"
+            );
+
+    }
+
+
+    if(currentTab === "received"){
+
+        filtered =
+            items.filter(
+                item =>
+                    item.status === "received"
+            );
+
+    }
+
+
+    if(!filtered.length){
+
+        container.innerHTML =
+            emptyHTML(
+                "No Items Found",
+                "There are no items in this section."
+            );
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered
+        .map(
+            item =>
+                itemCard(item)
+        )
+        .join("");
+
+}
+
+
+/* =====================================================
+   ITEM CARD
+===================================================== */
+
+function itemCard(item){
+
+    let statusText = "FOUND";
+    let statusClass = "status-found";
+
+
+    if(item.status === "lost"){
+
+        statusText = "LOST";
+        statusClass = "status-lost";
+
+    }
+
+
+    if(item.status === "received"){
+
+        statusText = "RECEIVED";
+        statusClass = "status-received";
+
+    }
+
+
+    const image =
+        item.image
+        ? `
+            <img
+                class="item-image"
+                src="${item.image}"
+                alt="Item">
+          `
+        : `
+            <div class="no-image">
+                No Image
+            </div>
+          `;
+
+
+    let actions = "";
+
+
+    /* LOST ITEM */
+
+    if(
+        item.type === "lost" &&
+        item.status === "lost" &&
+        item.postedBy.id === currentUser.id
+    ){
+
+        actions += `
+
+            <button
+                class="btn btn-primary"
+                onclick="showMatches('${item.id}')">
+
+                Possible Match
+
+            </button>
+
+
+            <button
+                class="btn btn-success"
+                onclick="selfReceived('${item.id}')">
+
+                Self Received
+
+            </button>
+
+        `;
+
+    }
+
+
+    /* FOUND ITEM */
+
+    if(
+        item.type === "found" &&
+        item.status === "available"
+    ){
+
+        actions += `
+
+            <button
+                class="btn btn-primary"
+                onclick="findMatchesForFound('${item.id}')">
+
+                Find Match
+
+            </button>
+
+        `;
+
+    }
+
+
+    /* RECEIVED */
+
+    if(item.status === "received"){
+
+        const mode =
+            item.received &&
+            item.received.mode === "self"
+            ? "Self Received"
+            : "Claimed / Returned";
+
+
+        actions += `
+
+            <div style="
+                width:100%;
+                padding-top:8px;
+                border-top:1px solid #edf0f4;
+                font-size:11px;
+                color:#697386;
+            ">
+
+                <b>Received Type:</b>
+                ${mode}
+
+                <br><br>
+
+                <b>Received Date:</b>
+                ${
+                    item.received
+                    ? formatDate(
+                        item.received.receivedAt
+                    )
+                    : "-"
+                }
+
+            </div>
+
+        `;
+
+    }
+
+
+    return `
+
+        <div class="item-card">
+
+            ${image}
+
+            <div class="item-body">
+
+                <div class="item-top">
+
+                    <div class="item-name">
+                        ${escapeHTML(item.itemName)}
+                    </div>
+
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                </div>
+
+
+                <div class="item-description">
+
+                    ${escapeHTML(item.description)}
+
+                </div>
+
+
+                <div class="item-info">
+
+                    <div class="info-row">
+
+                        <span>Location</span>
+
+                        <span>
+                            ${escapeHTML(item.location || "-")}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Posted By</span>
+
+                        <span>
+                            ${escapeHTML(item.postedBy.name)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Date</span>
+
+                        <span>
+                            ${formatDate(item.dateTime)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="item-actions">
+
+                    ${actions}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   MATCHING
+===================================================== */
+
+/*
+    Matching uses ONLY:
+
+    Item Name
+    Description
+
+    It does NOT use:
+
+    Photo
+    Location
+    Date
+    Time
+*/
+
+
+function normalize(text){
+
+    return String(text || "")
+        .toLowerCase()
+        .replace(/[^\w\s]/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+function getWords(text){
+
+    return normalize(text)
+        .split(" ")
+        .filter(
+            word =>
+                word.length > 1
+        );
+
+}
+
+
+function levenshtein(a,b){
+
+    const matrix = [];
+
+
+    for(let i=0;i<=b.length;i++){
+
+        matrix[i] = [i];
+
+    }
+
+
+    for(let j=0;j<=a.length;j++){
+
+        matrix[0][j] = j;
+
+    }
+
+
+    for(let i=1;i<=b.length;i++){
+
+        for(let j=1;j<=a.length;j++){
+
+            if(
+                b[i-1] ===
+                a[j-1]
+            ){
+
+                matrix[i][j] =
+                    matrix[i-1][j-1];
+
+            }else{
+
+                matrix[i][j] =
+                    Math.min(
+                        matrix[i-1][j-1] + 1,
+                        matrix[i][j-1] + 1,
+                        matrix[i-1][j] + 1
+                    );
+
+            }
+
+        }
+
+    }
+
+
+    return matrix[b.length][a.length];
+
+}
+
+
+function similarWord(a,b){
+
+    if(a === b){
+        return true;
+    }
+
+
+    if(
+        a.length < 3 ||
+        b.length < 3
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        a.includes(b) ||
+        b.includes(a)
+    ){
+
+        return true;
+
+    }
+
+
+    return levenshtein(a,b) <= 2;
+
+}
+
+
+function textSimilarity(a,b){
+
+    const aw =
+        getWords(a);
+
+    const bw =
+        getWords(b);
+
+
+    if(
+        !aw.length ||
+        !bw.length
+    ){
+
+        return 0;
+
+    }
+
+
+    let matches = 0;
+
+
+    aw.forEach(
+        word => {
+
+            if(
+                bw.some(
+                    other =>
+                        similarWord(
+                            word,
+                            other
+                        )
+                )
+            ){
+
+                matches++;
+
+            }
+
+        }
+    );
+
+
+    return matches /
+        Math.max(
+            aw.length,
+            bw.length
+        );
+
+}
+
+
+function nameSimilarity(a,b){
+
+    const A = normalize(a);
+    const B = normalize(b);
+
+
+    if(A === B){
+        return 1;
+    }
+
+
+    if(
+        A.includes(B) ||
+        B.includes(A)
+    ){
+
+        return .85;
+
+    }
+
+
+    return textSimilarity(A,B);
+
+}
+
+
+function matchScore(lost,found){
+
+    const nameScore =
+        nameSimilarity(
+            lost.itemName,
+            found.itemName
+        );
+
+
+    const descriptionScore =
+        textSimilarity(
+            lost.description,
+            found.description
+        );
+
+
+    return Math.round(
+        nameScore * 65 +
+        descriptionScore * 35
+    );
+
+}
+
+
+/* =====================================================
+   POSSIBLE MATCHES
+===================================================== */
+
+function showMatches(lostId){
+
+    const lost =
+        items.find(
+            item =>
+                item.id === lostId
+        );
+
+
+    if(!lost){
+        return;
+    }
+
+
+    const matches =
+        items
+        .filter(
+            item =>
+                item.type === "found" &&
+                item.status === "available"
+        )
+        .map(
+            found => ({
+                found,
+                score:
+                    matchScore(
+                        lost,
+                        found
+                    )
+            })
+        )
+        .filter(
+            result =>
+                result.score >= 45
+        )
+        .sort(
+            (a,b) =>
+                b.score - a.score
+        );
+
+
+    const container =
+        document.getElementById(
+            "matchesContainer"
+        );
+
+
+    if(!matches.length){
+
+        container.innerHTML =
+            emptyHTML(
+                "No Possible Match",
+                "No similar found item is available."
+            );
+
+    }else{
+
+        container.innerHTML =
+            matches
+            .map(
+                result => `
+
+                    <div class="match-card">
+
+                        <div class="match-title">
+
+                            <h3>
+                                ${escapeHTML(
+                                    result.found.itemName
+                                )}
+                            </h3>
+
+                            <span class="score">
+                                ${result.score}% Match
+                            </span>
+
+                        </div>
+
+
+                        <p>
+                            <b>Description:</b>
+                            ${escapeHTML(
+                                result.found.description
+                            )}
+                        </p>
+
+
+                        <p>
+                            <b>Found By:</b>
+                            ${escapeHTML(
+                                result.found.postedBy.name
+                            )}
+                        </p>
+
+
+                        <p>
+                            <b>Location:</b>
+                            ${escapeHTML(
+                                result.found.location || "-"
+                            )}
+                        </p>
+
+
+                        <br>
+
+
+                        <button
+                            class="btn btn-success"
+                            onclick="
+                                claimItem(
+                                    '${lost.id}',
+                                    '${result.found.id}'
+                                )
+                            ">
+
+                            This Is My Item
+
+                        </button>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+    }
+
+
+    document
+        .getElementById("matchModal")
+        .classList
+        .add("show");
+
+}
+
+
+/* =====================================================
+   FOUND -> LOST MATCH
+===================================================== */
+
+function findMatchesForFound(foundId){
+
+    const found =
+        items.find(
+            item =>
+                item.id === foundId
+        );
+
+
+    const matches =
+        items
+        .filter(
+            item =>
+                item.type === "lost" &&
+                item.status === "lost"
+        )
+        .map(
+            lost => ({
+                lost,
+                score:
+                    matchScore(
+                        lost,
+                        found
+                    )
+            })
+        )
+        .filter(
+            result =>
+                result.score >= 45
+        )
+        .sort(
+            (a,b) =>
+                b.score - a.score
+        );
+
+
+    const container =
+        document.getElementById(
+            "matchesContainer"
+        );
+
+
+    if(!matches.length){
+
+        container.innerHTML =
+            emptyHTML(
+                "No Possible Match",
+                "No similar lost item is available."
+            );
+
+    }else{
+
+        container.innerHTML =
+            matches
+            .map(
+                result => `
+
+                    <div class="match-card">
+
+                        <div class="match-title">
+
+                            <h3>
+                                ${escapeHTML(
+                                    result.lost.itemName
+                                )}
+                            </h3>
+
+                            <span class="score">
+                                ${result.score}% Match
+                            </span>
+
+                        </div>
+
+
+                        <p>
+                            <b>Description:</b>
+                            ${escapeHTML(
+                                result.lost.description
+                            )}
+                        </p>
+
+
+                        <p>
+                            <b>Lost By:</b>
+                            ${escapeHTML(
+                                result.lost.postedBy.name
+                            )}
+                        </p>
+
+
+                        <br>
+
+
+                        <button
+                            class="btn btn-success"
+                            onclick="
+                                claimItem(
+                                    '${result.lost.id}',
+                                    '${foundId}'
+                                )
+                            ">
+
+                            This Is My Item
+
+                        </button>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+    }
+
+
+    document
+        .getElementById("matchModal")
+        .classList
+        .add("show");
+
+}
+
+
+/* =====================================================
+   CLAIM ITEM
+===================================================== */
+
+function claimItem(
+    lostId,
+    foundId
+){
+
+    const lost =
+        items.find(
+            item =>
+                item.id === lostId
+        );
+
+
+    const found =
+        items.find(
+            item =>
+                item.id === foundId
+        );
+
+
+    if(!lost || !found){
+
+        toast(
+            "Item not found.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /*
+       Only original lost item owner
+       can confirm.
+    */
+
+    if(
+        lost.postedBy.id !==
+        currentUser.id
+    ){
+
+        toast(
+            "Only the owner can confirm this item.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        !confirm(
+            "Confirm that this is your item?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const received = {
+
+        mode:"claimed",
+
+        receiverUserId:
+            currentUser.id,
+
+        receiverName:
+            currentUser.name,
+
+        receiverStudentId:
+            currentUser.studentId,
+
+        receiverPhone:
+            currentUser.phone,
+
+        receivedAt:
+            new Date().toISOString()
+
+    };
+
+
+    /* LOST -> RECEIVED */
+
+    lost.status = "received";
+
+    lost.received = received;
+
+    lost.linkedLostItemId =
+        found.id;
+
+
+    /* FOUND -> RECEIVED */
+
+    found.status = "received";
+
+    found.received = received;
+
+    found.linkedLostItemId =
+        lost.id;
+
+
+    saveItems();
+
+
+    closeModal();
+
+    updateStats();
+
+    currentTab = "received";
+
+    renderItems();
+
+
+    openSection("received");
+
+
+    toast(
+        "Item marked as RECEIVED.",
+        "success"
+    );
+
+}
+
+
+/* =====================================================
+   SELF RECEIVED
+===================================================== */
+
+function selfReceived(lostId){
+
+    const item =
+        items.find(
+            i =>
+                i.id === lostId
+        );
+
+
+    if(!item){
+        return;
+    }
+
+
+    if(
+        item.postedBy.id !==
+        currentUser.id
+    ){
+
+        toast(
+            "Only the owner can use Self Received.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        !confirm(
+            "Did you personally receive/find this item?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    item.status = "received";
+
+
+    item.received = {
+
+        mode:"self",
+
+        receiverUserId:
+            currentUser.id,
+
+        receiverName:
+            currentUser.name,
+
+        receiverStudentId:
+            currentUser.studentId,
+
+        receiverPhone:
+            currentUser.phone,
+
+        receivedAt:
+            new Date().toISOString()
+
+    };
+
+
+    saveItems();
+
+    updateStats();
+
+
+    openSection("received");
+
+
+    toast(
+        "Item marked as Self Received.",
+        "success"
+    );
+
+}
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function emptyHTML(
+    title,
+    text
+){
+
+    return `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                ○
+            </div>
+
+            <h3>
+                ${title}
+            </h3>
+
+            <p>
+                ${text}
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+function clearForm(){
+
+    document.getElementById(
+        "itemName"
+    ).value = "";
+
+    document.getElementById(
+        "itemDescription"
+    ).value = "";
+
+    document.getElementById(
+        "itemLocation"
+    ).value = "";
+
+    document.getElementById(
+        "itemImage"
+    ).value = "";
+
+    setDateTime();
+
+}
+
+
+function setDateTime(){
+
+    const input =
+        document.getElementById(
+            "itemDateTime"
+        );
+
+
+    if(!input){
+        return;
+    }
+
+
+    const now =
+        new Date();
+
+
+    const local =
+        new Date(
+            now.getTime() -
+            now.getTimezoneOffset() * 60000
+        )
+        .toISOString()
+        .slice(0,16);
+
+
+    input.value = local;
+
+}
+
+
+function formatDate(date){
+
+    if(!date){
+        return "-";
+    }
+
+
+    return new Date(date)
+        .toLocaleString(
+            "en-IN",
+            {
+                dateStyle:"medium",
+                timeStyle:"short"
+            }
+        );
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("matchModal")
+        .classList
+        .remove("show");
+
+}
+
+
+function toast(
+    message,
+    type=""
+){
+
+    const element =
+        document.getElementById(
+            "toast"
+        );
+
+
+    element.innerText =
+        message;
+
+
+    element.className =
+        "toast show " + type;
+
+
+    setTimeout(
+        function(){
+
+            element.className =
+                "toast";
+
+        },
+        2800
+    );
+
+}
+
+
+function escapeHTML(value){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+    .getElementById("matchModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

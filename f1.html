@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="finditlogo.png"/>
+<link href="f2.css" rel="stylesheet"/>
+<title>FindIt Campus</title>
+<head>
+    <script src="f3.js"></script>
+</head>
+<body>
+<div class="auth-screen" id="authScreen">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="logo-icon">F</div>
+            <h1>FindIt Campus</h1>
+            <p>College Lost & Found</p>
+        </div>
+        <div id="loginBox">
+            <h2 class="auth-title">Welcome Back</h2>
+            <div id="loginMessage" class="message"></div>
+            <div class="input-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                >
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                >
+            </div>
+            <button class="primary-btn" onclick="login()">
+                Login
+            </button>
+            <div class="switch-text">
+                Don't have an account?
+                <span onclick="showRegister()">Register</span>
+            </div>
+        </div>
+        <div id="registerBox" style="display:none;">
+            <h2 class="auth-title">Create Account</h2>
+            <div id="registerMessage" class="message"></div>
+            <div class="input-group">
+                <label>Full Name</label>
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Enter your full name"
+                >
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="Enter your email"
+                >
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Minimum 6 characters"
+                >
+            </div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input
+                    type="password"
+                    id="registerConfirmPassword"
+                    placeholder="Confirm your password"
+                >
+            </div>
+            <button class="primary-btn" onclick="register()">
+                Create Account
+            </button>
+            <div class="switch-text">
+                Already have an account?
+                <span onclick="showLogin()">Login</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="app">
+    <nav class="navbar">
+        <div class="brand">
+            <div class="brand-icon">F</div>
+            <h2>FindIt Campus</h2>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#report">Report Item</a>
+            <a href="#lost">Lost Items</a>
+            <a href="#found">Found Items</a>
+            <a href="#received">Received</a>
+            <a href="#notifications" onclick="markNotificationsRead()">Notifications <span id="notificationBadge" class="notification-badge" style="display:none;">0</span></a>
+        </div>
+        <div class="user-menu">
+            <span class="user-name" id="currentUserName"></span>
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
+        </div>
+    </nav>
+    <section class="hero" id="home">
+        <div class="hero-box">
+            <h1>Find What You Lost.</h1>
+            <p>
+                FindIt Campus helps students report lost items,
+                report found items and connect matching items
+                so they can be returned to their rightful owners.
+            </p>
+        </div>
+    </section>
+    <section class="stats">
+        <div class="stat-card">
+            <p>Lost Items</p>
+            <h2 id="lostCount">0</h2>
+        </div>
+        <div class="stat-card">
+            <p>Found Items</p>
+            <h2 id="foundCount">0</h2>
+        </div>
+        <div class="stat-card">
+            <p>Received Items</p>
+            <h2 id="receivedCount">0</h2>
+        </div>
+        <div class="stat-card">
+            <p>Total Reports</p>
+            <h2 id="totalCount">0</h2>
+        </div>
+    </section>
+    <section class="container" id="report">
+        <div class="section-title">
+            <h2>Report an Item</h2>
+            <p>
+                Add details about a lost or found item.
+            </p>
+        </div>
+        <div class="report-card">
+            <div class="form-grid">
+                <div class="input-group full">
+                    <label>Report Type</label>
+                    <div class="type-buttons">
+                        <button
+                            class="type-btn active lost"
+                            id="lostTypeBtn"
+                            onclick="selectType('lost')"
+                        >
+                            Lost Item
+                        </button>
+                        <button
+                            class="type-btn found"
+                            id="foundTypeBtn"
+                            onclick="selectType('found')"
+                        >
+                            Found Item
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Item Name</label>
+                    <input
+                        type="text"
+                        id="itemName"
+                        placeholder="Example: Black Wallet"
+                    >
+                </div>
+                <div class="input-group">
+                    <label>Location</label>
+                    <input
+                        type="text"
+                        id="itemLocation"
+                        placeholder="Example: Library"
+                    >
+                </div>
+                <div class="input-group full">
+                    <label>Item Details</label>
+                    <textarea
+                        id="itemDetails"
+                        placeholder="Describe the item, colour, brand, marks, etc."
+                    ></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Date & Time</label>
+                    <input
+                        type="datetime-local"
+                        id="itemDate"
+                    >
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input
+                        type="tel"
+                        id="itemPhone"
+                        placeholder="Enter contact number"
+                    >
+                </div>
+                <div class="input-group">
+                    <label>Item Image</label>
+                    <input
+                        type="file"
+                        id="itemImage"
+                        accept="image/*"
+                        onchange="previewImage(event)"
+                    >
+                    <div class="image-preview" id="imagePreview">
+                        <img id="previewImg">
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button
+                    class="submit-btn"
+                    onclick="submitItem()"
+                >
+                    Submit Report
+                </button>
+                <button
+                    class="clear-btn"
+                    onclick="clearForm()"
+                >
+                    Clear
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="container" id="lost">
+        <div class="items-header">
+            <div class="section-title">
+                <h2>Lost Items</h2>
+                <p>Items reported as lost by students.</p>
+            </div>
+            <input
+                class="search-box"
+                id="lostSearch"
+                placeholder="Search lost items..."
+                oninput="renderAllItems()"
+            >
+        </div>
+        <div class="items-grid" id="lostGrid"></div>
+    </section>
+    <section class="container" id="found">
+        <div class="items-header">
+            <div class="section-title">
+                <h2>Found Items</h2>
+                <p>Items found around the campus.</p>
+            </div>
+            <input
+                class="search-box"
+                id="foundSearch"
+                placeholder="Search found items..."
+                oninput="renderAllItems()"
+            >
+        </div>
+        <div class="items-grid" id="foundGrid"></div>
+    </section>
+    <section class="container" id="notifications">
+        <div class="section-title">
+            <h2>Notifications</h2>
+            <p>Receive requests from other students and approve or reject them.</p>
+        </div>
+        <div id="notificationList" class="notification-list"></div>
+    </section>
+    <section class="container" id="received">
+        <div class="section-title">
+            <h2>Received Items</h2>
+            <p>
+                Items that have already been received.
+            </p>
+        </div>
+        <div class="items-grid" id="receivedGrid"></div>
+    </section>
+</div>
+<div class="modal" id="detailsModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Item Details</h2>
+            <button
+                class="close-btn"
+                onclick="closeModal('detailsModal')"
+            >
+                ×
+            </button>
+        </div>
+        <div id="detailsContent"></div>
+    </div>
+</div>
+<div class="modal" id="receiveModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>Receive Item</h2>
+            <button
+                class="close-btn"
+                onclick="closeModal('receiveModal')"
+            >
+                ×
+            </button>
+        </div>
+        <p style="color:#666;font-size:14px;margin-bottom:18px;">
+            Select how this item was received.
+        </p>
+        <div class="type-buttons">
+            <button
+                class="type-btn"
+                id="selfReceiveBtn"
+                onclick="selectReceiveMode('self')"
+            >
+                Self Received
+            </button>
+            <button
+                class="type-btn"
+                id="otherReceiveBtn"
+                onclick="selectReceiveMode('other')"
+            >
+                Received by Other
+            </button>
+        </div>
+        <div id="receiverForm" style="display:none;margin-top:20px;">
+            <div class="input-group">
+                <label>Receiver Name</label>
+                <input
+                    type="text"
+                    id="receiverName"
+                    placeholder="Receiver full name"
+                >
+            </div>
+            <div class="input-group">
+                <label>Receiver Phone</label>
+                <input
+                    type="tel"
+                    id="receiverPhone"
+                    placeholder="Receiver phone"
+                >
+            </div>
+            <div class="input-group">
+                <label>Student / ID Number</label>
+                <input
+                    type="text"
+                    id="receiverId"
+                    placeholder="Student ID"
+                >
+            </div>
+            <div class="input-group">
+                <label>Confirmation Note</label>
+                <textarea
+                    id="receiverNote"
+                    placeholder="Optional note"
+                ></textarea>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button
+                style="background:#eef0f6;color:#444;"
+                onclick="closeModal('receiveModal')"
+            >
+                Cancel
+            </button>
+            <button
+                style="background:#10b981;color:white;"
+                onclick="confirmReceive()"
+            >
+                Confirm Received
+            </button>
+        </div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
